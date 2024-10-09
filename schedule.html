@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Расписание</title>
+</head>
+<body>
+  <h1>Расписание учеников</h1>
+  <ul id="scheduleList"></ul>
+
+  <script>
+    async function loadSchedule() {
+      const response = await fetch('/students');
+      const students = await response.json();
+
+      const scheduleList = document.getElementById('scheduleList');
+      scheduleList.innerHTML = '';
+
+      students.forEach(student => {
+        const li = document.createElement('li');
+        li.textContent = `Имя: ${student.name}, Класс: ${student.class_id}, Расписание: ${student.schedule}`;
+        scheduleList.appendChild(li);
+      });
+    }
+
+    loadSchedule();
+  </script>
+</body>
+</html>
